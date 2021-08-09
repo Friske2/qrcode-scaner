@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="reader" width="500"></div>
+  <script src="./lib/html5-qrcode.min.js"></script>
+  <script>
+    const html5QrCode = new Html5Qrcode("reader");
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+        /* handle success */
+        console.log(decodedText)
+        if(decodedText) {
+          html5QrCode.stop().then((ignore) => {
+            location.href = decodedText
+          }).catch((err) => {
+            // Stop failed, handle it.
+          });
+        }
+    };
+    const config = { fps: 10, qrbox: 250 };
+    html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
+  </script>
+</body>
+</html>
